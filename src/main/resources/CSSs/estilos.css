@@ -1,0 +1,47 @@
+
+.titled-pane > .title {
+    -fx-background-color: #A7C7E7;
+    -fx-border-color: #87B3D9;
+    -fx-border-width: 1px;
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-padding: 8px 12px;
+}
+
+
+.titled-pane > .title > .arrow-button .arrow {
+    -fx-shape: "M 12,2 C 8,2 4,6 4,10 C 4,14 8,18 12,18 C 16,18 20,14 20,10 C 20,6 16,2 12,2 z M 12,14 L 8,10 L 10,10 L 10,6 L 14,6 L 14,10 L 16,10 L 12,14 z";
+    -fx-background-color: linear-gradient(to bottom, #6C8CD5, #4A6FC1);
+    -fx-scale-shape: true;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);
+}
+
+.titled-pane {
+    -fx-max-width: infinity;
+}
+
+.titled-pane > .content > * {
+    -fx-max-width: infinity;
+}
+
+/* Botón de la flecha */
+.titled-pane > .title > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 8px;
+}
+
+.titled-pane > .title > .arrow-button:hover .arrow {
+    -fx-background-color: linear-gradient(to bottom, #5A7CC5, #3A5FA1);
+}
+
+/* Texto del título */
+.titled-pane > .title > .text {
+    -fx-fill: #2C3E50;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+/* Hover suave */
+.titled-pane > .title:hover {
+    -fx-background-color: #95B8D9;
+}
