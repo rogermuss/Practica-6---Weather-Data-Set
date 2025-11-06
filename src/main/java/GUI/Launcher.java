@@ -13,12 +13,11 @@ public class Launcher extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI_WeatherData/interfaz_data.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
-        stage.setFullScreen(false);
+        stage.setFullScreen(true);
         stage.setTitle("DataSet - Bienvenida");
         stage.setScene(scene);
         stage.show();
         stage.resizableProperty().setValue(Boolean.FALSE);
-
 
     }
 

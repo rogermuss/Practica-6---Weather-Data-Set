@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Data {
 
-    String[][] columnas = new String[13][];
+    String[][] columnas;
 
     public void leerCSV(){
         ArrayList<String[]> temp = new ArrayList<>();
