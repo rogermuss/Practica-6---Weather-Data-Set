@@ -28,18 +28,18 @@
                      <children>
                          <HBox prefHeight="381.0" prefWidth="835.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                              <children>
-                                 <TitledPane fx:id="titledPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="150.0" prefHeight="386.0" prefWidth="166.0" style="-fx-border-color: #5DADE2;" stylesheets="@../CSSs/estilos.css" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                 <TitledPane fx:id="titledPane0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="150.0" prefHeight="386.0" prefWidth="166.0" style="-fx-border-color: #5DADE2;" stylesheets="@../CSSs/estilos.css" textFill="WHITE" HBox.hgrow="ALWAYS">
                                      <graphic>
-                                         <Label fx:id="paneLabel" text="Formatted Date" textFill="WHITE">
+                                         <Label fx:id="paneLabel0" text="Formatted Date" textFill="WHITE">
                                              <font>
                                                  <Font name="Gadugi Bold" size="13.0" />
                                              </font>
                                          </Label>
                                      </graphic>
                                  <content>
-                                    <VBox fx:id="vContainer" prefHeight="217.0" prefWidth="147.0">
+                                    <VBox fx:id="vContainer0" prefHeight="217.0" prefWidth="147.0">
                                        <children>
-                                          <BarChart fx:id="grafica" prefHeight="150.0" prefWidth="74.0">
+                                          <BarChart fx:id="grafica0" prefHeight="150.0" prefWidth="74.0">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" />
                                             </xAxis>
@@ -47,7 +47,7 @@
                                               <NumberAxis side="LEFT" />
                                             </yAxis>
                                           </BarChart>
-                                          <ListView fx:id="listView" prefHeight="154.0" prefWidth="174.0" VBox.vgrow="ALWAYS" />
+                                          <ListView fx:id="listView0" prefHeight="154.0" prefWidth="174.0" VBox.vgrow="ALWAYS" />
                                        </children>
                                     </VBox>
                                  </content>

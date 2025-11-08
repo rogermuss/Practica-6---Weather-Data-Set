@@ -9,6 +9,10 @@ public class Data {
 
     String[][] columnas;
 
+    public Data(){
+        leerCSV();
+    }
+
     public void leerCSV(){
         ArrayList<String[]> temp = new ArrayList<>();
         String ruta = "src/main/resources/WeatherDataSet/weatherHistory.csv";
