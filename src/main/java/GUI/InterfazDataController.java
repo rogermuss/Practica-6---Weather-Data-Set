@@ -19,6 +19,8 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 public class InterfazDataController {
 
@@ -182,13 +184,56 @@ public class InterfazDataController {
 
     public void mostrarAlertaOrdenamiento(TitledPane pane) {
 
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setTitle("Ordenamiento");
-        alerta.setHeaderText("¿Deseas ejecutar los métodos de ordenamiento?");
-        alerta.setContentText("Se medirá el rendimiento y se actualizará la gráfica.");
+        Dialog<List<String>> dialog = new Dialog<>();
+        dialog.setTitle("Seleccion de metodos de Ordenamiento :)");
+        dialog.setHeaderText("Elija los metodos que desee ejecutar:");
 
-        if (alerta.showAndWait().get() == ButtonType.OK) {
-            probarRendimiento(obtenerArregloParaPane(pane), pane);
+        // Botones
+        ButtonType btnAceptar = new ButtonType("Ejecutar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(btnAceptar, ButtonType.CANCEL);
+
+        // Checkboxes
+        CheckBox chkQuick = new CheckBox("QuickSort");
+        CheckBox chkMerge = new CheckBox("MergeSort");
+        CheckBox chkShell = new CheckBox("ShellSort");
+        CheckBox chkSeleccion = new CheckBox("Selection Sort");
+        CheckBox chkRadix = new CheckBox("RadixSort");
+        CheckBox chkSort = new CheckBox("Arrays.sort()");
+        CheckBox chkParallel = new CheckBox("Arrays.parallelSort()");
+
+        VBox content = new VBox();
+        content.getChildren().addAll(
+                chkQuick, chkMerge, chkShell,
+                chkSeleccion, chkRadix, chkSort, chkParallel
+        );
+        dialog.getDialogPane().setContent(content);
+
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("/CSSs/alert.css").toExternalForm()
+        );
+
+        dialog.setResultConverter(button -> {
+            if(btnAceptar == button) {
+                List<String> seleccionados = new ArrayList<>();
+
+                if (chkQuick.isSelected()) seleccionados.add("QuickSort");
+                if (chkMerge.isSelected()) seleccionados.add("MergeSort");
+                if (chkShell.isSelected()) seleccionados.add("ShellSort");
+                if (chkSeleccion.isSelected()) seleccionados.add("Selection");
+                if (chkRadix.isSelected()) seleccionados.add("RadixSort");
+                if (chkSort.isSelected()) seleccionados.add("sort()");
+                if (chkParallel.isSelected()) seleccionados.add("parallelSort()");
+
+                return seleccionados;
+            }
+
+            return null;
+        });
+        Optional<List<String>> result = dialog.showAndWait();
+
+        if (result.isPresent() && !result.isEmpty()) {
+            probarRendimiento(obtenerArregloParaPane(pane), pane, result.get());
         }
     }
 
@@ -240,7 +285,7 @@ public class InterfazDataController {
         }
     }
 
-    public void probarRendimiento(String[] arregloOriginal, TitledPane titledPane) {
+    public void probarRendimiento(String[] arregloOriginal, TitledPane titledPane, List<String> metodos) {
 
         String[] arreglo = arregloOriginal.clone();
         double[] resultado =  new double[arreglo.length];
@@ -270,26 +315,58 @@ public class InterfazDataController {
             return;
         }
 
-        long tQuick, tMerge, tShell, tSel, tRadix, tSort, tPar;
-
-        if (!isDouble(arreglo[0])) {
-
-            tQuick = medirTiempo(() -> Ordenamientos.quickSort(arreglo.clone()));
-            tMerge = medirTiempo(() -> Ordenamientos.mergeSort(arreglo.clone()));
-            tShell = medirTiempo(() -> Ordenamientos.shell(arreglo.clone(), arreglo.length));
-            tSel = medirTiempo(() -> Ordenamientos.selection(arreglo.clone(), arreglo.length));
-            tRadix = medirTiempo(() -> Ordenamientos.radixSortStrings(arreglo.clone()));
-            tSort = medirTiempo(() -> Arrays.sort(arreglo.clone()));
-            tPar = medirTiempo(() -> Arrays.parallelSort(arreglo.clone()));
-        }else{
-            final double[] res = resultado;
-            tQuick = medirTiempo(() -> Ordenamientos.quickSort(res.clone()));
-            tMerge = medirTiempo(() -> Ordenamientos.mergeSort(res.clone()));
-            tShell = medirTiempo(() -> Ordenamientos.shell(res.clone(), res.length));
-            tSel = medirTiempo(() -> Ordenamientos.selection(res.clone(), res.length));
-            tRadix = medirTiempo(() -> Ordenamientos.radixSortStrings(arreglo.clone()));
-            tSort = medirTiempo(() -> Arrays.sort(res.clone()));
-            tPar = medirTiempo(() -> Arrays.parallelSort(res.clone()));
+        long tQuick = 0, tMerge = 0, tShell = 0, tSel = 0, tRadix = 0, tSort = 0, tPar = 0;
+        for(String elemento: metodos) {
+            if (!isDouble(arreglo[0])) {
+                switch (elemento) {
+                    case "QuickSort":
+                    tQuick = medirTiempo(() -> Ordenamientos.quickSort(arreglo.clone()));
+                    break;
+                    case "MergeSort":
+                    tMerge = medirTiempo(() -> Ordenamientos.mergeSort(arreglo.clone()));
+                    break;
+                    case "ShellSort":
+                    tShell = medirTiempo(() -> Ordenamientos.shell(arreglo.clone(), arreglo.length));
+                    break;
+                    case "Selection":
+                    tSel = medirTiempo(() -> Ordenamientos.selection(arreglo.clone(), arreglo.length));
+                    break;
+                    case "RadixSort":
+                    tRadix = medirTiempo(() -> Ordenamientos.radixSortStrings(arreglo.clone()));
+                    break;
+                    case "sort()":
+                    tSort = medirTiempo(() -> Arrays.sort(arreglo.clone()));
+                    break;
+                    case "parallelSort()":
+                    tPar = medirTiempo(() -> Arrays.parallelSort(arreglo.clone()));
+                    break;
+                }
+            } else {
+                final double[] res = resultado;
+                switch (elemento) {
+                    case "QuickSort":
+                        tQuick = medirTiempo(() -> Ordenamientos.quickSort(res.clone()));
+                        break;
+                    case "MergeSort":
+                        tMerge = medirTiempo(() -> Ordenamientos.mergeSort(res.clone()));
+                        break;
+                    case "ShellSort":
+                        tShell = medirTiempo(() -> Ordenamientos.shell(res.clone(), res.length));
+                        break;
+                    case "Selection":
+                        tSel = medirTiempo(() -> Ordenamientos.selection(res.clone(), res.length));
+                        break;
+                    case "RadixSort":
+                        tRadix = medirTiempo(() -> Ordenamientos.radixSortStrings(arreglo.clone()));
+                        break;
+                    case "sort()":
+                        tSort = medirTiempo(() -> Arrays.sort(res.clone()));
+                        break;
+                    case "parallelSort()":
+                        tPar = medirTiempo(() -> Arrays.parallelSort(res.clone()));
+                        break;
+                }
+            }
         }
         Series<String, Number> series = new Series<>();
         series.setName("Tiempo (ns)");
