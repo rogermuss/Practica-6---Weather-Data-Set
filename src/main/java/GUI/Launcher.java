@@ -17,7 +17,6 @@ public class Launcher extends Application {
         stage.setTitle("Weather Mexicali - Bienvenida");
         stage.setScene(scene);
         stage.show();
-        stage.resizableProperty().setValue(Boolean.FALSE);
 
     }
 

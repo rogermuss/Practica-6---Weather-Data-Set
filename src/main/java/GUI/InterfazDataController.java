@@ -5,8 +5,11 @@ import DataSet.Ordenamientos;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -15,6 +18,7 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -156,6 +160,7 @@ public class InterfazDataController {
         fillLists();
 
         exitButton();
+        resetButton();
     }
 
 
@@ -264,6 +269,28 @@ public class InterfazDataController {
             }
         });
 
+    }
+
+    public void resetButton() throws IOException {
+        resetButton.setOnMouseClicked(event -> {
+            // Cargar la nueva vista
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI_WeatherData/interfaz_data.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Obtener el stage (ventana) desde cualquier nodo que esté en la escena actual
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Crear y asignar la nueva escena
+            Scene nuevaEscena = new Scene(root);
+            stage.setScene(nuevaEscena);
+            stage.setFullScreen(true);
+            stage.show();
+        });
     }
 
     public String[] copiarArreglo(int indiceFijo){

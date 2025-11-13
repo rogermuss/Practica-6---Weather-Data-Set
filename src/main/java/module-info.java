@@ -10,6 +10,7 @@ module org.example.practica6_weatherdataset {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires javafx.graphics;
 
     opens GUI to javafx.fxml;
     exports GUI;
